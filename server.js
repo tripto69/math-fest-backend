@@ -6,12 +6,31 @@ const app = express();
 app.use(cors({ origin: '*' })); 
 app.use(express.json());
 
-// Securely connects to Neon via Render's Environment Variables
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
 
+// --- NEW LOGIN ENDPOINT ---
+app.post('/api/login', (req, res) => {
+    const { username, pin } = req.body;
+    
+    // HARDCODED GUARDS FOR QUICK SETUP 
+    // (You can add as many as you need here for your gate slaves)
+    const validGuards = {
+        "Gate1": "1234",
+        "Gate2": "5678",
+        "Admin": "0000"
+    };
+
+    if (validGuards[username] && validGuards[username] === pin) {
+        res.json({ success: true, message: "Login successful" });
+    } else {
+        res.json({ success: false, message: "Invalid Username or PIN." });
+    }
+});
+
+// --- SCAN ENDPOINT ---
 app.post('/api/scan', async (req, res) => {
     const { query } = req.body; 
 
