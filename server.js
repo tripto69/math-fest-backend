@@ -18,9 +18,9 @@ app.post('/api/login', (req, res) => {
     // HARDCODED GUARDS FOR QUICK SETUP 
     // (You can add as many as you need here for your gate slaves)
     const validGuards = {
-        "Gate1": "1234",
-        "Gate2": "5678",
-        "Admin": "0000"
+       "tripto": "admin789",    // Your custom username and password
+        "gate1": "festival2026", // Another guard
+        "slave1": "1234"
     };
 
     if (validGuards[username] && validGuards[username] === pin) {
